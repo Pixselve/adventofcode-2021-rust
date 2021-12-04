@@ -28,7 +28,7 @@ pub fn part_1(input: &String) -> i32 {
             least_number += 2_i32.pow(k.clone() as u32) * 1;
         }
     }
-    return most_numbers * least_number;
+    most_numbers * least_number
 }
 
 pub fn part_2(input: &String) -> i32 {
@@ -36,7 +36,7 @@ pub fn part_2(input: &String) -> i32 {
         .lines()
         .map(|x| BinaryNumber::new(x))
         .collect::<Vec<BinaryNumber>>();
-    ();
+
     let mut most_numbers: Vec<BinaryNumber> = strings.clone();
     let mut bit_position = 0;
 
@@ -78,7 +78,7 @@ pub fn part_2(input: &String) -> i32 {
         bit_position += 1;
     }
 
-    return most_numbers[0].convert_to_decimal() * least_numbers[0].convert_to_decimal();
+    most_numbers[0].convert_to_decimal() * least_numbers[0].convert_to_decimal()
 }
 
 #[derive( Clone)]
@@ -104,6 +104,6 @@ impl BinaryNumber {
         for i in 0..self.number.len() {
             decimal += self.number[self.number.len() - i - 1] * 2_i32.pow(i as u32);
         }
-        return decimal;
+        decimal
     }
 }

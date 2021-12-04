@@ -1,4 +1,3 @@
-
 #[derive(Debug)]
 pub enum Direction {
     Foward,
@@ -31,7 +30,6 @@ pub fn part_1(moves: Vec<Move>) -> i32 {
     return horizontal * depth;
 }
 
-
 pub fn part_2(moves: Vec<Move>) -> i32 {
     let mut horizontal = 0;
     let mut depth = 0;
@@ -54,14 +52,20 @@ pub fn part_2(moves: Vec<Move>) -> i32 {
 }
 
 pub fn parse_input(input: &String) -> Vec<Move> {
-    input.split("\r\n").map(|x| {
-        let splitted = x.split(" ").collect::<Vec<&str>>();
-        let direction = match splitted[0] {
-            "forward" => Direction::Foward,
-            "down" => Direction::Down,
-            "up" => Direction::Up,
-            _ => panic!("Unknown direction"),
-        };
-        return Move { direction, steps: splitted[1].parse::<i32>().unwrap() };
-    }).collect()
+    input
+        .split("\r\n")
+        .map(|x| {
+            let splitted = x.split(' ').collect::<Vec<&str>>();
+            let direction = match splitted[0] {
+                "forward" => Direction::Foward,
+                "down" => Direction::Down,
+                "up" => Direction::Up,
+                _ => panic!("Unknown direction"),
+            };
+            Move {
+                direction,
+                steps: splitted[1].parse::<i32>().unwrap(),
+            }
+        })
+        .collect()
 }

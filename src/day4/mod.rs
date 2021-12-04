@@ -4,7 +4,9 @@ pub fn part_1(numbers: Vec<u8>, boards: Vec<Board>) -> u32 {
     let mut marked_numbers: HashSet<u8> = HashSet::new();
     for x in numbers {
         marked_numbers.insert(x);
-        let winning_board = boards.iter().find(|b| b.is_win(&|x| marked_numbers.contains(x)));
+        let winning_board = boards
+            .iter()
+            .find(|b| b.is_win(&|x| marked_numbers.contains(x)));
         if let Some(board) = winning_board {
             return (board.sum_unmarked(&|x| marked_numbers.contains(x)) as u32) * (x as u32);
         }
@@ -17,30 +19,36 @@ pub fn part_2(numbers: Vec<u8>, boards: Vec<Board>) -> u32 {
     let mut new_boards: Vec<Board> = boards;
 
     for number in numbers {
-
         marked_numbers.insert(number);
 
         if new_boards.len() == 1 {
             let board = new_boards.first().unwrap();
             if board.is_win(&|x| marked_numbers.contains(x)) {
-                return (board.sum_unmarked(&|x| marked_numbers.contains(x)) as u32) * (number as u32);
+                return (board.sum_unmarked(&|x| marked_numbers.contains(x)) as u32)
+                    * (number as u32);
             }
-
         } else {
-            new_boards = new_boards.iter().filter(|b| !b.is_win(&|x| marked_numbers.contains(x))).cloned().collect::<Vec<Board>>();
+            new_boards = new_boards
+                .iter()
+                .filter(|b| !b.is_win(&|x| marked_numbers.contains(x)))
+                .cloned()
+                .collect::<Vec<Board>>();
         }
     }
 
-
     0
-
 }
-
 
 pub fn parse_input(input: &str) -> (Vec<u8>, Vec<Board>) {
     let lines = input.split("\n\n").collect::<Vec<&str>>();
-    let numbers = lines[0].split(',').map(|s| s.parse::<u8>().unwrap()).collect::<Vec<u8>>();
-    let boards = lines[1..].iter().map(|board_string| Board::new(board_string)).collect::<Vec<Board>>();
+    let numbers = lines[0]
+        .split(',')
+        .map(|s| s.parse::<u8>().unwrap())
+        .collect::<Vec<u8>>();
+    let boards = lines[1..]
+        .iter()
+        .map(|board_string| Board::new(board_string))
+        .collect::<Vec<Board>>();
     (numbers, boards)
 }
 #[derive(Debug, Eq, PartialEq, Clone)]
@@ -115,7 +123,7 @@ impl Board {
 
 #[cfg(test)]
 mod tests {
-    use crate::day4::{Board, parse_input, part_1, part_2};
+    use crate::day4::{parse_input, part_1, part_2, Board};
     use std::collections::HashSet;
 
     #[test]
@@ -188,11 +196,16 @@ mod tests {
 10 16 15  9 19
 18  8 23 26 20
 22 11 13  6  5
- 2  0 12  3  7"
+ 2  0 12  3  7",
         );
 
-
-        assert_eq!(result.0, vec![7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10, 16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1]);
+        assert_eq!(
+            result.0,
+            vec![
+                7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10, 16, 13, 6, 15, 25, 12, 22, 18, 20, 8,
+                19, 3, 26, 1
+            ]
+        );
         assert_eq!(result.1, vec![
             Board::new("22 13 17 11  0\n 8  2 23  4 24\n21  9 14 16  7\n 6 10  3 18  5\n 1 12 20 15 19"),
             Board::new(" 3 15  0  2 22\n 9 18 13 17  5\n19  8  7 25 23\n20 11 10 24  4\n14 21 16 12  6"),
