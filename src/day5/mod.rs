@@ -54,49 +54,20 @@ pub fn part_1(data: &Vec<(Coordinate, Coordinate)>) -> usize {
 pub fn part_2(data: &Vec<(Coordinate, Coordinate)>) -> usize {
     let mut vertical_horizontal_map: HashMap<Coordinate, u32> = HashMap::new();
     for (from, to) in data {
-        if from.y == to.y {
-            for x in min(from.x, to.x)..max(to.x + 1, from.x + 1) {
-                match vertical_horizontal_map.get_mut(&Coordinate { x, y: to.y }) {
-                    None => {
-                        vertical_horizontal_map.insert(Coordinate { x, y: to.y }, 1);
-                    }
-                    Some(value) => {
-                        *value += 1;
-                    }
-                }
-            }
-        } else if from.x == to.x {
-            for y in min(from.y, to.y)..max(to.y + 1, from.y + 1) {
-                match vertical_horizontal_map.get_mut(&Coordinate { x: from.x, y }) {
-                    None => {
-                        vertical_horizontal_map.insert(Coordinate { x: from.x, y }, 1);
-                    }
-                    Some(value) => {
-                        *value += 1;
-                    }
-                }
-            }
-        } else {
-            let x_sign = (to.x - from.x) / (to.x - from.x).abs();
-            let y_sign = (to.y - from.y) / (to.y - from.y).abs();
+        let x_sign = (to.x - from.x).signum();
+        let y_sign = (to.y - from.y).signum();
 
-            for i in 0..=(from.x - to.x).abs() {
-                match vertical_horizontal_map.get_mut(&Coordinate {
-                    x: from.x + i * x_sign,
-                    y: from.y + i * y_sign,
-                }) {
-                    None => {
-                        vertical_horizontal_map.insert(
-                            Coordinate {
-                                x: from.x + i * x_sign,
-                                y: from.y + i * y_sign,
-                            },
-                            1,
-                        );
-                    }
-                    Some(value) => {
-                        *value += 1;
-                    }
+        for i in 0..=max((to.x - from.x).abs(), (to.y - from.y).abs()) {
+            let coordinate = Coordinate {
+                x: from.x + i * x_sign,
+                y: from.y + i * y_sign,
+            };
+            match vertical_horizontal_map.get_mut(&coordinate) {
+                None => {
+                    vertical_horizontal_map.insert(coordinate, 1);
+                }
+                Some(value) => {
+                    *value += 1;
                 }
             }
         }
