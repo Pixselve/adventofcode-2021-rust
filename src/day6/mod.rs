@@ -1,12 +1,12 @@
 pub fn part_1(fishes: &[usize; 9]) -> usize {
-    squids_after_day(fishes, 80)
+    fishes_after_day(fishes, 80)
 }
 
 pub fn part_2(fishes: &[usize; 9]) -> usize {
-    squids_after_day(fishes, 256)
+    fishes_after_day(fishes, 256)
 }
 
-fn squids_after_day(fishes: &[usize; 9], day: usize) -> usize {
+fn fishes_after_day(fishes: &[usize; 9], day: usize) -> usize {
     let mut fishes_array = fishes.clone();
     for _ in 0..day {
         let zero_count = fishes_array[0];
