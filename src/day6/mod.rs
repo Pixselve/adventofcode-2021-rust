@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 pub fn part_1(squids: &[usize; 9]) -> usize {
     squids_after_day(squids, 80)
 }
