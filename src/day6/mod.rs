@@ -1,24 +1,24 @@
-pub fn part_1(squids: &[usize; 9]) -> usize {
-    squids_after_day(squids, 80)
+pub fn part_1(fishes: &[usize; 9]) -> usize {
+    squids_after_day(fishes, 80)
 }
 
-pub fn part_2(squids: &[usize; 9]) -> usize {
-    squids_after_day(squids, 256)
+pub fn part_2(fishes: &[usize; 9]) -> usize {
+    squids_after_day(fishes, 256)
 }
 
-fn squids_after_day(squids: &[usize; 9], day: usize) -> usize {
-    let mut squids_array = squids.clone();
+fn squids_after_day(fishes: &[usize; 9], day: usize) -> usize {
+    let mut fishes_array = fishes.clone();
     for _ in 0..day {
-        let zero_count = squids_array[0];
-        for j in 0..(squids_array.len() - 1) {
-            squids_array[j] = squids_array[j + 1];
-            squids_array[j + 1] = 0;
+        let zero_count = fishes_array[0];
+        for j in 0..(fishes_array.len() - 1) {
+            fishes_array[j] = fishes_array[j + 1];
+            fishes_array[j + 1] = 0;
         }
-        squids_array[6] += zero_count;
-        squids_array[8] += zero_count;
+        fishes_array[6] += zero_count;
+        fishes_array[8] += zero_count;
     }
-    println!("{:?}", squids_array);
-    squids_array.iter().sum()
+    println!("{:?}", fishes_array);
+    fishes_array.iter().sum()
 }
 
 pub fn parse_input(input: &str) -> Vec<u8> {
